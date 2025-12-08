@@ -2,6 +2,7 @@ package com.example.poo;
 
 
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import java.util.ArrayList;
@@ -10,12 +11,12 @@ import java.util.List;
 public class MembreController {
 
     // --- LIENS AVEC LE FICHIER FXML ---
+    @FXML private ListView<Membre> listeMembres;
     @FXML private TextField txtNom;
     @FXML private TextField txtPrenom;
     @FXML private TextField txtEmail;
     @FXML private TextField txtTel;
     @FXML private ComboBox<Integer> comboAbo;   // Liste déroulante Abonnement
-    @FXML private ListView<Membre> listeMembres; // La liste à l'écran
     @FXML private TextField txtRecherche;       // Barre de recherche
 
     // Lien avec la base de données
@@ -97,5 +98,8 @@ public class MembreController {
     public void onRafraichirClick() {
         listeMembres.getItems().clear();
         listeMembres.getItems().addAll(dao.lister());
+    }
+
+    public void onModifierClick(ActionEvent actionEvent) {
     }
 }

@@ -11,7 +11,7 @@
 
     <Label text="GESTION DES MEMBRES" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
 
-    <GridPane hgap="10" vgap="10">
+    <GridPane hgap="10" vgap="10" alignment="CENTER">
         <TextField fx:id="txtNom" promptText="Nom" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
         <TextField fx:id="txtPrenom" promptText="Prénom" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
@@ -19,21 +19,31 @@
         <TextField fx:id="txtTel" promptText="Téléphone" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
 
         <Label text="Abonnement :" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-        <ComboBox fx:id="comboAbo" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+        <ComboBox fx:id="comboAbo" GridPane.rowIndex="2" GridPane.columnIndex="1" prefWidth="150"/>
     </GridPane>
 
-    <Button text="AJOUTER LE MEMBRE" onAction="#onAjouterClick" style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+    <HBox spacing="10" alignment="CENTER">
+        <Button text="AJOUTER" onAction="#onAjouterClick"
+                style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;"/>
+
+        <Button text="MODIFIER" onAction="#onModifierClick"
+                style="-fx-background-color: #FF9800; -fx-text-fill: white; -fx-font-weight: bold;"/>
+    </HBox>
 
     <Separator/>
 
-    <Label text="Liste des inscrits :"/>
-    <Label text="Liste des inscrits :"/>
+    <VBox spacing="5">
+        <Label text="Rechercher un membre :"/>
+        <TextField fx:id="txtRecherche" promptText="Tapez un nom..." onKeyReleased="#onRechercheTape"/>
 
-    <TextField fx:id="txtRecherche" promptText="Rechercher par nom..." onKeyReleased="#onRechercheTape"/>
+        <ListView fx:id="listeMembres" prefHeight="250"/>
+    </VBox>
 
-    <ListView fx:id="listeMembres" prefHeight="250"/>
-    <ListView fx:id="listeMembres" prefHeight="250"/>
+    <HBox spacing="10" alignment="CENTER">
+        <Button text="SUPPRIMER SÉLECTION" onAction="#onSupprimerClick"
+                style="-fx-background-color: #f44336; -fx-text-fill: white;"/>
 
-    <Button text="Actualiser la liste" onAction="#onRafraichirClick"/>
+        <Button text="Actualiser la liste" onAction="#onRafraichirClick"/>
+    </HBox>
 
 </VBox>

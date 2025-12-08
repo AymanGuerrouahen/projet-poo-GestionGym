@@ -61,4 +61,25 @@ public class MembreDao {
 
     public void supprimer(int id) {
     }
+    // 4. MODIFIER un membre existant
+    public void modifier(Membre m) {
+        String sql = "UPDATE membre SET nom=?, prenom=?, email=?, telephone=?, id_abonnement=? WHERE id=?";
+
+        try (Connection conn = DriverManager.getConnection(url, user, password);
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, m.getNom());
+            stmt.setString(2, m.getPrenom());
+            stmt.setString(3, m.getEmail());
+            stmt.setString(4, m.getTelephone());
+            stmt.setInt(5, m.getIdAbonnement());
+            stmt.setInt(6, m.getId()); // Important : on utilise l'ID pour savoir qui modifier
+
+            stmt.executeUpdate();
+            System.out.println("Membre modifié !");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
