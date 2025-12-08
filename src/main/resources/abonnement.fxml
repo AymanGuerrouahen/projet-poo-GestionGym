@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.club.gestionclub.controller.AbonnementController">
+    <children>
+        <Label layoutX="20.0" layoutY="20.0" text="Gestion des Abonnements">
+            <font>
+                <Font name="System Bold" size="20.0" />
+            </font>
+        </Label>
+
+        <TableView fx:id="tableAbonnements" layoutX="20.0" layoutY="70.0" prefHeight="250.0" prefWidth="560.0">
+            <columns>
+                <TableColumn fx:id="colType" prefWidth="200.0" text="Type d'abonnement" />
+                <TableColumn fx:id="colPrix" prefWidth="100.0" text="Prix (€)" />
+                <TableColumn fx:id="colDuree" prefWidth="100.0" text="Durée (Mois)" />
+            </columns>
+        </TableView>
+
+        <Button layoutX="480.0" layoutY="340.0" mnemonicParsing="false" text="Ajouter (Bientôt)" />
+
+        <Label fx:id="lblTotal" layoutX="20.0" layoutY="345.0" text="CA Total : 0 €" textFill="#2e7d32">
+            <font>
+                <Font name="System Bold" size="14.0" />
+            </font>
+        </Label>
+    </children>
+</AnchorPane>
