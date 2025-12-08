@@ -11,48 +11,45 @@ import java.sql.*;
 
 public class HelloApplication extends Application {
 
-    // INFO BDD (Vérifie ton mot de passe !)
+    // --- NOUVEAU : On stocke le rôle ici pour que tout le monde puisse le lire ---
+    public static String ROLE_CONNECTE = "";
+
     private static final String URL = "jdbc:mysql://localhost:3306/projet_poo";
     private static final String USER = "root";
     private static final String PASSWORD = "";
 
     @Override
     public void start(Stage stage) {
-        // --- ÉCRAN LOGIN ---
-        Label titre = new Label("CONNEXION PROJET POO");
+        Label titre = new Label("CONNEXION SECURISEE");
         titre.setStyle("-fx-font-weight: bold; -fx-font-size: 16px;");
 
         TextField champUser = new TextField();
-        champUser.setPromptText("Identifiant (admin)");
+        champUser.setPromptText("Identifiant");
         champUser.setMaxWidth(200);
 
         PasswordField champPass = new PasswordField();
-        champPass.setPromptText("Mot de passe (1234)");
+        champPass.setPromptText("Mot de passe");
         champPass.setMaxWidth(200);
 
         Button boutonLogin = new Button("Se connecter");
         Label message = new Label();
 
-        // Action du bouton
         boutonLogin.setOnAction(e -> {
-            String user = champUser.getText();
-            String pass = champPass.getText();
+            // On essaie de récupérer le rôle depuis la BDD
+            String roleTrouve = recupererRole(champUser.getText(), champPass.getText());
 
-            if (verifierLogin(user, pass)) {
-                // SI C'EST BON : On change de page !
+            if (roleTrouve != null) {
+                // C'EST GAGNÉ !
+                ROLE_CONNECTE = roleTrouve; // On sauvegarde le rôle (ex: "ADMIN" ou "USER")
+
                 try {
-                    // 1. Charger le fichier FXML des membres
                     FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("membre-view.fxml"));
-                    Scene sceneMembre = new Scene(fxmlLoader.load(), 600, 500);
-
-                    // 2. Mettre la nouvelle scène sur la fenêtre
+                    Scene sceneMembre = new Scene(fxmlLoader.load(), 600, 550);
                     stage.setScene(sceneMembre);
-                    stage.setTitle("Gestion des Membres");
+                    stage.setTitle("Gestion - Connecté en tant que " + roleTrouve);
                     stage.centerOnScreen();
-
                 } catch (Exception ex) {
                     ex.printStackTrace();
-                    message.setText("Erreur : Impossible d'ouvrir la vue Membre");
                 }
 
             } else {
@@ -64,24 +61,26 @@ public class HelloApplication extends Application {
         VBox root = new VBox(15, titre, champUser, champPass, boutonLogin, message);
         root.setAlignment(Pos.CENTER);
         Scene scene = new Scene(root, 300, 250);
-        stage.setTitle("Login");
         stage.setScene(scene);
         stage.show();
     }
 
-    // Vérification SQL
-    private boolean verifierLogin(String username, String password) {
-        String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
+    // Cette fonction renvoie le Rôle (String) ou null si pas trouvé
+    private String recupererRole(String username, String password) {
+        String sql = "SELECT role FROM users WHERE username = ? AND password = ?";
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, username);
             stmt.setString(2, password);
             ResultSet rs = stmt.executeQuery();
-            return rs.next();
+
+            if (rs.next()) {
+                return rs.getString("role"); // On retourne "ADMIN" ou "USER"
+            }
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
         }
+        return null; // Échec
     }
 
     public static void main(String[] args) {
