@@ -1,7 +1,8 @@
 module com.example.poo {
     requires javafx.controls;
     requires javafx.fxml;
-    requires java.sql;          // Pour MySQL
+    requires java.sql;
+    requires java.desktop;          // Pour MySQL
 
     // Autorise l'accès pour le FXML (la vue)
     opens com.example.poo to javafx.fxml;

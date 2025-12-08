@@ -27,6 +27,11 @@
     <Separator/>
 
     <Label text="Liste des inscrits :"/>
+    <Label text="Liste des inscrits :"/>
+
+    <TextField fx:id="txtRecherche" promptText="Rechercher par nom..." onKeyReleased="#onRechercheTape"/>
+
+    <ListView fx:id="listeMembres" prefHeight="250"/>
     <ListView fx:id="listeMembres" prefHeight="250"/>
 
     <Button text="Actualiser la liste" onAction="#onRafraichirClick"/>

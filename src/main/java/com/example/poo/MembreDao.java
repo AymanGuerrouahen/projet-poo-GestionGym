@@ -58,4 +58,7 @@ public class MembreDao {
 
         return liste;
     }
+
+    public void supprimer(int id) {
+    }
 }
