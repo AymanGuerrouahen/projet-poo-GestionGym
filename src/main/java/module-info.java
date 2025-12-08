@@ -1,9 +1,11 @@
-module com.poo.poo {
+module com.example.poo {
     requires javafx.controls;
     requires javafx.fxml;
-    requires java.sql;
+    requires java.sql;          // Pour MySQL
 
+    // Autorise l'accès pour le FXML (la vue)
+    opens com.example.poo to javafx.fxml;
 
-    opens com.poo.poo to javafx.fxml;
-    exports com.poo.poo;
+    // IMPORTANT : C'est cette ligne qui manquait pour l'erreur "IllegalAccessException"
+    exports com.example.poo;
 }
